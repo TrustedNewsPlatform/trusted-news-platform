@@ -2,7 +2,10 @@ import React, { Component } from "react";
 
 import { Card, Button } from "react-bootstrap";
 
+import Swal from "sweetalert2";
+
 import { contract, provider } from "../utils/ethereum";
+import { ethers } from "ethers";
 
 export class NewsConfirmationView extends Component {
   state = {
@@ -26,7 +29,10 @@ export class NewsConfirmationView extends Component {
         this.state.allNews[i],
         address
       );
-      if (!isNewsConfirmed) {
+      const remainingApprovals = await contract.getNewsRemainingApprovals(
+        this.state.allNews[i]
+      );
+      if (!isNewsConfirmed && remainingApprovals === 0) {
         this.setState({
           notConfirmedNews: [
             ...this.state.notConfirmedNews,
@@ -42,47 +48,77 @@ export class NewsConfirmationView extends Component {
     await contract.approveNews(ipfsHash);
   }
   async handleDisapprove(ipfsHash, explanationHash) {
-    await contract.disapproveNews(ipfsHash, explanationHash);
+    Swal.fire({
+      title: "Please give a reason",
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off"
+      },
+      showCancelButton: true,
+      confirmButtonText: "Submit",
+      showLoaderOnConfirm: true,
+      preConfirm: async explanation => {
+        window.localStorage.setItem(
+          "trune" + ipfsHash + "HasBeenDisapproved",
+          true
+        );
+        await contract.disapproveNews(
+          ipfsHash,
+          ethers.utils.sha256(Buffer(explanation))
+        );
+      }
+    });
   }
 
   render() {
     return (
       <div>
-        {" "}
         {this.state.loaded ? (
           <div>
-            {this.state.notConfirmedNews.map(hash => (
+            {this.state.notConfirmedNews.length === 0 ? (
+              "Nothing to be confirmed"
+            ) : (
               <div>
-                <Card style={{ width: "18rem" }}>
-                  <Card.Body>
-                    <Card.Title>Some name</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">
-                      {hash}
-                    </Card.Subtitle>
-                  </Card.Body>
-                  <Button
-                    variant="success"
-                    style={{ marginLeft: "5px", marginRight: "5px" }}
-                    onClick={async () => {
-                      await this.handleApprove(hash);
-                    }}
-                  >
-                    Approve
-                  </Button>
-                  <br />
-                  <Button
-                    variant="danger"
-                    style={{ marginLeft: "5px", marginRight: "5px" }}
-                    onClick={async () => {
-                      await this.handleDisapprove(hash, "");
-                    }}
-                  >
-                    Decline
-                  </Button>
-                </Card>
-                <br />
+                {this.state.notConfirmedNews.map(hash => (
+                  <div>
+                    {window.localStorage.getItem(
+                      "trune" + hash + "HasBeenDisapproved"
+                    ) ? null : (
+                      <div>
+                        <Card style={{ width: "18rem" }}>
+                          <Card.Body>
+                            <Card.Title>Some name</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">
+                              {hash}
+                            </Card.Subtitle>
+                          </Card.Body>
+                          <Button
+                            variant="success"
+                            style={{ marginLeft: "5px", marginRight: "5px" }}
+                            onClick={async () => {
+                              await this.handleApprove(hash);
+                            }}
+                          >
+                            Approve
+                          </Button>
+                          <br />
+                          <Button
+                            variant="danger"
+                            style={{ marginLeft: "5px", marginRight: "5px" }}
+                            onClick={async () => {
+                              await this.handleDisapprove(hash, "");
+                            }}
+                          >
+                            Decline
+                          </Button>
+                        </Card>
+                        <br />
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
           </div>
         ) : (
           "loading ..."
