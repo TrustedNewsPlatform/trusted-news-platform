@@ -23,7 +23,12 @@ export default class DomainView extends Component {
     }
   }
   async refetch() {
-    await this.setState({ publicKey: null, error: null });
+    await this.setState({
+      publicKey: null,
+      error: null,
+      news: [],
+      newsCount: null
+    });
     try {
       const publicKey = await fetch(
         "https://" + this.props.match.params.domain + "/trune.txt"
@@ -65,9 +70,9 @@ export default class DomainView extends Component {
         <div>News count: {this.state.newsCount}</div>
         <div>
           {this.state.news.map(hash => (
-            <Link key={hash} to={"/article/" + hash}>
-              {hash}
-            </Link>
+            <div key={hash}>
+              <Link to={"/article/" + hash}>{hash}</Link>
+            </div>
           ))}
         </div>
         <div>
