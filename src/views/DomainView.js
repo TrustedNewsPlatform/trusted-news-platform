@@ -23,7 +23,12 @@ export default class DomainView extends Component {
     }
   }
   async refetch() {
-    await this.setState({ publicKey: null, error: null });
+    await this.setState({
+      publicKey: null,
+      error: null,
+      news: [],
+      newsCount: null
+    });
     try {
       const publicKey = await fetch(
         "https://" + this.props.match.params.domain + "/trune.txt"
