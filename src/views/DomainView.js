@@ -70,9 +70,9 @@ export default class DomainView extends Component {
         <div>News count: {this.state.newsCount}</div>
         <div>
           {this.state.news.map(hash => (
-            <Link key={hash} to={"/article/" + hash}>
-              {hash}
-            </Link>
+            <div key={hash}>
+              <Link to={"/article/" + hash}>{hash}</Link>
+            </div>
           ))}
         </div>
         <div>
