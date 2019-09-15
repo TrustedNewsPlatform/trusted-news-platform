@@ -8,7 +8,7 @@ import ipfsClient from "ipfs-http-client";
 
 import { contract, provider, signerAvailable } from "../utils/ethereum";
 import { ipfsHashToBytes32, bytes32ToIpfsHash } from "../utils/ipfsUtils";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Card, InputGroup } from "react-bootstrap";
 import ReactMarkdown from "react-markdown";
 import { ipfsApiHost, ipfsApiPort } from "../config";
 
@@ -16,7 +16,9 @@ export default class PublisherView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      textarea: ""
+      textarea: "",
+      newApprover: "",
+      approvers: []
     };
   }
   render() {
@@ -46,12 +48,62 @@ export default class PublisherView extends Component {
               <FormControl
                 disabled={!signerAvailable}
                 as="textarea"
-                className="mr-sm-2 mt-2"
+                className="mr-sm-2"
                 value={this.state.textarea}
                 onChange={evt => this.setState({ textarea: evt.target.value })}
                 placeholder="Enter news text here..."
                 style={{ minHeight: 400 }}
               />
+              <div>
+                <div>
+                  {this.state.approvers.map(approver => (
+                    <div style={{ padding: 5 }}>
+                      {approver}{" "}
+                      <Button
+                        onClick={() => {
+                          const newApp = this.state.approvers;
+                          newApp.splice(
+                            this.state.approvers.indexOf(approver),
+                            1
+                          );
+                          this.setState({ approvers: newApp });
+                        }}
+                      >
+                        -
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+                <InputGroup className="mt-2">
+                  <FormControl
+                    disabled={!signerAvailable}
+                    value={this.state.newApprover}
+                    onChange={evt =>
+                      this.setState({ newApprover: evt.target.value })
+                    }
+                    placeholder="Enter additional approver address..."
+                  />
+                  <Button
+                    onClick={evt => {
+                      if (
+                        this.state.approvers
+                          .map(s => s.toLowerCase())
+                          .indexOf(this.state.newApprover.toLowerCase()) !== -1
+                      )
+                        return;
+                      this.setState({
+                        approvers: [
+                          ...this.state.approvers,
+                          this.state.newApprover
+                        ].sort(),
+                        newApprover: ""
+                      });
+                    }}
+                  >
+                    +
+                  </Button>
+                </InputGroup>
+              </div>
               <Button
                 disabled={!signerAvailable}
                 className="mt-2"
@@ -62,10 +114,14 @@ export default class PublisherView extends Component {
             </Form>
           </Col>
           <Col>
-            <ReactMarkdown
-              source={this.state.textarea}
-              style={{ padding: 20 }}
-            />
+            <Card>
+              <Card.Body>
+                <ReactMarkdown
+                  source={this.state.textarea}
+                  style={{ padding: 0 }}
+                />
+              </Card.Body>
+            </Card>
           </Col>
         </Row>
       </div>
@@ -83,9 +139,7 @@ export default class PublisherView extends Component {
     console.log("Bytes32 hash: " + b32hash);
     console.log(provider.address);
     console.log(
-      await contract.functions.publishNews(b32hash, [
-        await provider.getAddress()
-      ])
+      await contract.functions.publishNews(b32hash, this.state.approvers)
     );
   }
 }

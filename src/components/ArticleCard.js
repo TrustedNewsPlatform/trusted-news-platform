@@ -41,7 +41,15 @@ export default class ArticleCard extends Component {
   }
   render() {
     return (
-      <Card className="mb-2">
+      <Card
+        className="mb-2"
+        style={{
+          display:
+            this.state.approvalsLeft > 0 && this.props.hideIfUnverified
+              ? "none"
+              : "block"
+        }}
+      >
         <Card.Body>
           <div style={{ opacity: 0.5, fontSize: 10 }}>
             Article {this.props.hash}

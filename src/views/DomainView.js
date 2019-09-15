@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 
 import { contract } from "../utils/ethereum";
 import ArticleCard from "../components/ArticleCard";
@@ -31,7 +31,8 @@ export default class DomainView extends Component {
       publicKey: null,
       error: null,
       news: [],
-      newsCount: null
+      newsCount: null,
+      fakeNewsHidden: true
     });
     try {
       const publicKey = await getTruneResolution(
@@ -76,9 +77,25 @@ export default class DomainView extends Component {
         <div className="mb-2">
           Total article count: {this.state.newsCount} (showing last 10)
         </div>
+        <div className="mb-2">
+          <Button
+            variant={this.state.fakeNewsHidden ? "success" : "danger"}
+            onClick={() => {
+              this.setState({ fakeNewsHidden: !this.state.fakeNewsHidden });
+            }}
+          >
+            {this.state.fakeNewsHidden
+              ? "Unverified articles hidden"
+              : "Unverified articles shown"}
+          </Button>
+        </div>
         <div>
           {this.state.news.map(hash => (
-            <ArticleCard hash={hash} key={hash} />
+            <ArticleCard
+              hideIfUnverified={this.state.fakeNewsHidden}
+              hash={hash}
+              key={hash}
+            />
           ))}
         </div>
         <div className="mb-2">
