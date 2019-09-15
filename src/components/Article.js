@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import ReactMarkdown from "react-markdown";
 import { bytes32ToIpfsHash, fetchWithTimeout } from "../utils/ipfsUtils";
 import { Row, Col } from "react-bootstrap";
+import { ipfsEndpoint } from "../config";
 
 export default class Article extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ export default class Article extends Component {
     try {
       this.setState({
         content: await fetchWithTimeout(
-          "http://127.0.0.1:8080/ipfs/" + bytes32ToIpfsHash(this.props.hash)
+          ipfsEndpoint + bytes32ToIpfsHash(this.props.hash)
         ).then(res => res.text())
       });
     } catch (err) {

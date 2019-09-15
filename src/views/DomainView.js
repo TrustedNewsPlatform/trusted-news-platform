@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
 
 import { contract } from "../utils/ethereum";
+import ArticleCard from "../components/ArticleCard";
 
 export default class DomainView extends Component {
   constructor(props) {
@@ -76,15 +77,11 @@ export default class DomainView extends Component {
         </div>
         <div>
           {this.state.news.map(hash => (
-            <Card className="mb-2">
-              <Card.Body>
-                <Link to={"/article/" + hash}>{hash}</Link>
-              </Card.Body>
-            </Card>
+            <ArticleCard hash={hash} key={hash} />
           ))}
         </div>
         <div className="mb-2">
-          <Link to="/">Back home</Link>
+          <Link to="/">Go back</Link>
         </div>
       </div>
     );

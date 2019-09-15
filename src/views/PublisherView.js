@@ -10,6 +10,7 @@ import { contract, provider } from "../utils/ethereum";
 import { ipfsHashToBytes32, bytes32ToIpfsHash } from "../utils/ipfsUtils";
 import { Row, Col } from "react-bootstrap";
 import ReactMarkdown from "react-markdown";
+import { ipfsApiHost, ipfsApiPort } from "../config";
 
 export default class PublisherView extends Component {
   constructor(props) {
@@ -22,8 +23,8 @@ export default class PublisherView extends Component {
     return (
       <div>
         <div>
-          For this to work you need a local IPFS node on port 5001, and an
-          exposed Ethereum wallet in browser (e.g. using Metamask or Mist).
+          For this to work you need an exposed Ethereum wallet in browser (e.g.
+          using Metamask or Mist).
         </div>
         <Row>
           <Col
@@ -64,7 +65,7 @@ export default class PublisherView extends Component {
     );
   }
   async publish() {
-    const ipfs = ipfsClient("127.0.0.1", 5001, { protocol: "http" });
+    const ipfs = ipfsClient(ipfsApiHost, ipfsApiPort, { protocol: "https" });
     const [res] = await ipfs.add(this.state.textarea);
     console.log("IPFS hash: " + res.hash);
     const b32hash = ipfsHashToBytes32(res.hash);
