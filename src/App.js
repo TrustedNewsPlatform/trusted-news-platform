@@ -24,10 +24,6 @@ export default class App extends Component {
             <Route path="/domain/:domain" component={DomainView} />
             <Route component={NotFoundView} />
           </Switch>
-          <div>
-            <Link to="/publish">Publish</Link> |{" "}
-            <Link to="/confirm">Confirm</Link>
-          </div>
         </Container>
       </div>
     );

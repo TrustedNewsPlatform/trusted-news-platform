@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
@@ -16,7 +17,7 @@ class Header extends Component {
   }
   render() {
     return (
-      <Navbar expand="sm">
+      <Navbar expand="md">
         <Navbar.Brand>
           <Link to="/">
             <img
@@ -30,6 +31,12 @@ class Header extends Component {
         </Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
+          <Nav.Link as={Link} to="/publish">
+            Publisher UI
+          </Nav.Link>
+          <Nav.Link as={Link} to="/confirm">
+            Confirmer UI
+          </Nav.Link>
           <Form
             inline
             onSubmit={evt => {

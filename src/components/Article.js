@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 
+import ReactMarkdown from "react-markdown";
 import { bytes32ToIpfsHash, fetchWithTimeout } from "../utils/ipfsUtils";
+import { Row, Col } from "react-bootstrap";
 
 export default class Article extends Component {
   constructor(props) {
@@ -28,9 +30,11 @@ export default class Article extends Component {
     }
     return (
       <div style={{ fontFamily: "Georgia" }}>
-        {this.state.content.split("\n").map((text, i) => (
-          <div key={i}>{text}</div>
-        ))}
+        <Row>
+          <Col>
+            <ReactMarkdown source={this.state.content} />
+          </Col>
+        </Row>
       </div>
     );
   }
