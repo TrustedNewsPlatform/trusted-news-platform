@@ -76,6 +76,7 @@ export class NewsConfirmationView extends Component {
       <div>
         <div
           style={{ color: "red", display: signerAvailable ? "none" : "block" }}
+          className="mb-4"
         >
           For this to work you need an exposed Ethereum wallet in browser (e.g.
           using Metamask or Mist).
