@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+import Card from "react-bootstrap/Card";
+
 import Article from "../components/Article";
 
 import { contract } from "../utils/ethereum";
@@ -37,11 +39,13 @@ export default class ArticleView extends Component {
   }
   render() {
     return (
-      <div>
-        {this.renderHeader()}
-        {this.renderContent()}
-        <Link to="/">Back home</Link>
-      </div>
+      <Card>
+        <Card.Body>
+          {this.renderHeader()}
+          {this.renderContent()}
+          <Link to="/">Back home</Link>
+        </Card.Body>
+      </Card>
     );
   }
   renderHeader() {

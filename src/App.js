@@ -16,14 +16,16 @@ export default class App extends Component {
       <div className="App">
         <Container>
           <Header />
-          <Switch>
-            <Route exact path="/" component={HomeView} />
-            <Route path="/article/:hash" component={ArticleView} />
-            <Route path="/publish" component={PublisherView} />
-            <Route path="/confirm" component={NewsConfirmationView} />
-            <Route path="/domain/:domain" component={DomainView} />
-            <Route component={NotFoundView} />
-          </Switch>
+          <div className="mb-4">
+            <Switch>
+              <Route exact path="/" component={HomeView} />
+              <Route path="/article/:hash" component={ArticleView} />
+              <Route path="/publish" component={PublisherView} />
+              <Route path="/confirm" component={NewsConfirmationView} />
+              <Route path="/domain/:domain" component={DomainView} />
+              <Route component={NotFoundView} />
+            </Switch>
+          </div>
         </Container>
       </div>
     );
