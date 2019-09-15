@@ -31,7 +31,7 @@ export default class DomainView extends Component {
     });
     try {
       const publicKey = await fetch(
-        "http://" + this.props.match.params.domain + "/trune.txt"
+        "https://" + this.props.match.params.domain + "/trune.txt"
       ).then(res => res.text());
       this.setState({ publicKey, error: null });
       const count = await contract.functions.getNewsConceringCount(publicKey);
