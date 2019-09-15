@@ -15,7 +15,7 @@ export default class HomeView extends Component {
               modern world. A world in which every news can be fake, and there
               is no easy way to distinguish it.
             </p>
-            <h3>That's where Trune comes</h3>
+            <h3>That's where we come</h3>
             <p>
               Trune completely <i>ELIMINATES</i> (this shout sounds cool right?)
               fake news by aggregating them by concerned parties and forcing
@@ -24,11 +24,13 @@ export default class HomeView extends Component {
             </p>
             <h3>Check out these sites which already use our solution</h3>
             <ul>
-              {["piotradamczyk.pl", "xeno.yt"].sort().map(domain => (
-                <li key={domain}>
-                  <Link to={"/domain/" + domain}>{domain}</Link>
-                </li>
-              ))}
+              {["piotradamczyk.pl", "quanosky.pl", "xeno.yt"]
+                .sort()
+                .map(domain => (
+                  <li key={domain}>
+                    <Link to={"/domain/" + domain}>{domain}</Link>
+                  </li>
+                ))}
             </ul>
             <h3>Or just integrate your own one</h3>
             <p>
