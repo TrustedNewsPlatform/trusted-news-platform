@@ -18,12 +18,8 @@ export default class App extends Component {
           <Header />
           <Switch>
             <Route exact path="/" component={HomeView} />
-            <Route exact path="/article/:hash" component={ArticleView} />
-            <Route
-              exact
-              path="/confirmations/"
-              component={NewsConfirmationView}
-            />
+            <Route path="/article/:hash" component={ArticleView} />
+            <Route path="/confirm" component={NewsConfirmationView} />
             <Route path="/domain/:domain" component={DomainView} />
             <Route component={NotFoundView} />
           </Switch>

@@ -121,7 +121,7 @@ export class NewsConfirmationView extends Component {
             )}
           </div>
         ) : (
-          "loading ..."
+          "Loading..."
         )}
       </div>
     );
