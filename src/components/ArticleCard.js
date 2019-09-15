@@ -55,8 +55,12 @@ export default class ArticleCard extends Component {
             <div style={{ fontFamily: "Georgia" }}>
               <ReactMarkdown
                 source={
-                  this.state.content.substr(0, 100) +
-                  (this.state.error ? "" : "...")
+                  this.state.content
+                    .replace(/!\[(.*)\]\(.*\)/g, "`$1`")
+                    .substr(0, 100) +
+                  (this.state.error || this.state.content.length > 100
+                    ? ""
+                    : "...")
                 }
               />
               <Link to={"/article/" + this.props.hash}>

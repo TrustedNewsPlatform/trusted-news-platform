@@ -5,6 +5,7 @@ import { Card } from "react-bootstrap";
 
 import { contract } from "../utils/ethereum";
 import ArticleCard from "../components/ArticleCard";
+import { getTruneResolution } from "../utils/reverseTrune";
 
 export default class DomainView extends Component {
   constructor(props) {
@@ -33,9 +34,9 @@ export default class DomainView extends Component {
       newsCount: null
     });
     try {
-      const publicKey = await fetch(
-        "https://" + this.props.match.params.domain + "/trune.txt"
-      ).then(res => res.text());
+      const publicKey = await getTruneResolution(
+        this.props.match.params.domain
+      );
       this.setState({ publicKey, error: null });
       const count = await contract.functions.getNewsConceringCount(publicKey);
       this.setState({ newsCount: count.toNumber() });
