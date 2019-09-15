@@ -18,12 +18,11 @@ export default class App extends Component {
           <Header />
           <div className="mb-4">
             <Switch>
-              <Route exact path="/" component={HomeView} />
               <Route path="/article/:hash" component={ArticleView} />
               <Route path="/publish" component={PublisherView} />
               <Route path="/confirm" component={NewsConfirmationView} />
               <Route path="/domain/:domain" component={DomainView} />
-              <Route component={NotFoundView} />
+              <Route component={HomeView} />
             </Switch>
           </div>
         </Container>
