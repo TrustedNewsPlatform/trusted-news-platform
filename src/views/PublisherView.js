@@ -83,25 +83,28 @@ export default class PublisherView extends Component {
                     }
                     placeholder="Enter additional approver address..."
                   />
-                  <Button
-                    onClick={evt => {
-                      if (
-                        this.state.approvers
-                          .map(s => s.toLowerCase())
-                          .indexOf(this.state.newApprover.toLowerCase()) !== -1
-                      )
-                        return;
-                      this.setState({
-                        approvers: [
-                          ...this.state.approvers,
-                          this.state.newApprover
-                        ].sort(),
-                        newApprover: ""
-                      });
-                    }}
-                  >
-                    +
-                  </Button>
+                  <InputGroup.Append>
+                    <Button
+                      onClick={evt => {
+                        if (
+                          this.state.approvers
+                            .map(s => s.toLowerCase())
+                            .indexOf(this.state.newApprover.toLowerCase()) !==
+                          -1
+                        )
+                          return;
+                        this.setState({
+                          approvers: [
+                            ...this.state.approvers,
+                            this.state.newApprover
+                          ].sort(),
+                          newApprover: ""
+                        });
+                      }}
+                    >
+                      +
+                    </Button>
+                  </InputGroup.Append>
                 </InputGroup>
               </div>
               <Button
