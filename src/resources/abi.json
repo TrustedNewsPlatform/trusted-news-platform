@@ -1,285 +1,332 @@
 [
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "publisher",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "name": "concerns",
-          "type": "address[]"
-        },
-        {
-          "indexed": false,
-          "name": "newsIpfsHash",
-          "type": "bytes32"
-        }
-      ],
-      "name": "NewsPublished",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "newsIpfsHash",
-          "type": "bytes32"
-        },
-        {
-          "indexed": false,
-          "name": "approver",
-          "type": "address"
-        }
-      ],
-      "name": "NewsApproved",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "newsIpfsHash",
-          "type": "bytes32"
-        },
-        {
-          "indexed": false,
-          "name": "disapprover",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "name": "explanationIpfsHash",
-          "type": "bytes32"
-        }
-      ],
-      "name": "NewsDisapproved",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "newsIpfsHash",
-          "type": "bytes32"
-        }
-      ],
-      "name": "NewsMarkedAsNotFake",
-      "type": "event"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "_newsIpfsHash",
-          "type": "bytes32"
-        },
-        {
-          "name": "_requiredApprovals",
-          "type": "address[]"
-        }
-      ],
-      "name": "publishNews",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "_newsIpfsHash",
-          "type": "bytes32"
-        }
-      ],
-      "name": "approveNews",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "_newsIpfsHash",
-          "type": "bytes32"
-        },
-        {
-          "name": "_explanationIpfsHash",
-          "type": "bytes32"
-        }
-      ],
-      "name": "disapproveNews",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "_newsIpfsHash",
-          "type": "bytes32"
-        }
-      ],
-      "name": "isHashValid",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "_newsIpfsHash",
-          "type": "bytes32"
-        }
-      ],
-      "name": "getNewsPublisher",
-      "outputs": [
-        {
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "_newsIpfsHash",
-          "type": "bytes32"
-        }
-      ],
-      "name": "getNewsConcerns",
-      "outputs": [
-        {
-          "name": "",
-          "type": "address[]"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "_newsIpfsHash",
-          "type": "bytes32"
-        },
-        {
-          "name": "_approver",
-          "type": "address"
-        }
-      ],
-      "name": "isNewsApprovedBy",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "_newsIpfsHash",
-          "type": "bytes32"
-        }
-      ],
-      "name": "getNewsRemainingApprovals",
-      "outputs": [
-        {
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "_entity",
-          "type": "address"
-        }
-      ],
-      "name": "getNewsConcerning",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bytes32[]"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "_entity",
-          "type": "address"
-        }
-      ],
-      "name": "getNewsConceringCount",
-      "outputs": [
-        {
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "entity",
-          "type": "address"
-        },
-        {
-          "name": "_id",
-          "type": "uint256"
-        }
-      ],
-      "name": "getNewsConceringByID",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bytes32"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    }
-  ]
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "publisher",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "concerns",
+        "type": "address[]"
+      },
+      {
+        "indexed": false,
+        "name": "newsIpfsHash",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "publishmentTimestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "NewsPublished",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "newsIpfsHash",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "approver",
+        "type": "address"
+      }
+    ],
+    "name": "NewsApproved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "newsIpfsHash",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "disapprover",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "explanationIpfsHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "NewsDisapproved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "newsIpfsHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "NewsMarkedAsNotFake",
+    "type": "event"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_newsIpfsHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "_requiredApprovals",
+        "type": "address[]"
+      }
+    ],
+    "name": "publishNews",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_newsIpfsHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "approveNews",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_newsIpfsHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "_explanationIpfsHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "disapproveNews",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_newsIpfsHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "isHashValid",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_newsIpfsHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getNewsPublisher",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_newsIpfsHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getNewsConcerns",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_newsIpfsHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "_approver",
+        "type": "address"
+      }
+    ],
+    "name": "isNewsApprovedBy",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_newsIpfsHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getNewsRemainingApprovals",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_entity",
+        "type": "address"
+      }
+    ],
+    "name": "getNewsConcerning",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_entity",
+        "type": "address"
+      }
+    ],
+    "name": "getNewsConceringCount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "entity",
+        "type": "address"
+      },
+      {
+        "name": "_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "getNewsConceringByID",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_newsIpfsHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "_entity",
+        "type": "address"
+      }
+    ],
+    "name": "didVote",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_newsIpfsHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getNewsPublishmentTimestamp",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
