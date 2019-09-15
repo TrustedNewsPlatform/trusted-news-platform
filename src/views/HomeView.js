@@ -20,7 +20,8 @@ export default class HomeView extends Component {
               Trune completely <i>ELIMINATES</i> (this shout sounds cool right?)
               fake news by aggregating them by concerned parties and forcing
               these parties to react on the news before it is published on the
-              site.
+              site. Everything is protected by asymetric cryptography Blockchain
+              technology, running on Ethereum network.
             </p>
             <h3>Check out these sites which already use our solution</h3>
             <ul>
