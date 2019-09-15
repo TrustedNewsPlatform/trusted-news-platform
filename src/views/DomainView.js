@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+import { Card } from "react-bootstrap";
+
 import { contract } from "../utils/ethereum";
 
 export default class DomainView extends Component {
@@ -36,7 +38,7 @@ export default class DomainView extends Component {
       this.setState({ publicKey, error: null });
       const count = await contract.functions.getNewsConceringCount(publicKey);
       this.setState({ newsCount: count.toNumber() });
-      for (let i = 0; i < count; i++) {
+      for (let i = count - 1; i >= (count > 10 ? count - 11 : 0); i--) {
         this.setState({
           news: [
             ...this.state.news,
@@ -65,17 +67,23 @@ export default class DomainView extends Component {
     }
     return (
       <div>
-        <div>Hooray! This domain owner integrates with Trune.</div>
-        <div>{publicKey ? publicKey : "Loading publicKey..."}</div>
-        <div>News count: {this.state.newsCount}</div>
-        <div>
-          {this.state.news.map(hash => (
-            <div key={hash}>
-              <Link to={"/article/" + hash}>{hash}</Link>
-            </div>
-          ))}
+        <h1>{this.props.match.params.domain}</h1>
+        <div style={{ opacity: 0.5, fontSize: 10 }}>
+          {publicKey ? "Public key: " + publicKey : "Loading publicKey..."}
+        </div>
+        <div className="mb-2">
+          Total article count: {this.state.newsCount} (showing last 10)
         </div>
         <div>
+          {this.state.news.map(hash => (
+            <Card className="mb-2">
+              <Card.Body>
+                <Link to={"/article/" + hash}>{hash}</Link>
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
+        <div className="mb-2">
           <Link to="/">Back home</Link>
         </div>
       </div>
