@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 
 import abi from "../resources/abi.json";
+import { ethereumEndpoint, contractAddress } from "../config.js";
 
 let provider;
 
@@ -8,16 +9,12 @@ if (window.ethereum) {
   const ethereumEnabled = window.ethereum.enable();
 
   if (!ethereumEnabled) {
-    provider = new ethers.providers.JsonRpcProvider("https://xeno.yt:8545");
+    provider = new ethers.providers.JsonRpcProvider(ethereumEndpoint);
   } else {
     provider = new ethers.providers.Web3Provider(window.ethereum).getSigner();
   }
 }
 
-const contract = new ethers.Contract(
-  "0x8D036375cCf21AC9ac1A34Fe2CD93Da56a704918",
-  abi,
-  provider
-);
+const contract = new ethers.Contract(contractAddress, abi, provider);
 
 export { contract, provider };
