@@ -32,7 +32,7 @@ export class NewsConfirmationView extends Component {
       const remainingApprovals = await contract.getNewsRemainingApprovals(
         this.state.allNews[i]
       );
-      if (!isNewsConfirmed && remainingApprovals === 0) {
+      if (!isNewsConfirmed && remainingApprovals !== 0) {
         this.setState({
           notConfirmedNews: [
             ...this.state.notConfirmedNews,
