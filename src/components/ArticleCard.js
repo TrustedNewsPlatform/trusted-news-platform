@@ -52,7 +52,7 @@ export default class ArticleCard extends Component {
           {!this.state.content ? (
             <div>Loading preview...</div>
           ) : (
-            <div>
+            <div style={{ fontFamily: "Georgia" }}>
               <ReactMarkdown
                 source={
                   this.state.content.substr(0, 100) +
