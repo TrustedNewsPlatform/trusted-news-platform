@@ -4,7 +4,7 @@ import { Card, Button } from "react-bootstrap";
 
 import Swal from "sweetalert2";
 
-import { contract, provider } from "../utils/ethereum";
+import { contract, provider, signerAvailable } from "../utils/ethereum";
 import { ethers } from "ethers";
 
 export class NewsConfirmationView extends Component {
@@ -16,6 +16,7 @@ export class NewsConfirmationView extends Component {
   };
 
   async componentDidMount() {
+    if (!signerAvailable) return this.setState({ loaded: true });
     const address = await provider.getAddress();
     const newsCount = await contract.getNewsConceringCount(address);
 
@@ -73,6 +74,12 @@ export class NewsConfirmationView extends Component {
   render() {
     return (
       <div>
+        <div
+          style={{ color: "red", display: signerAvailable ? "none" : "block" }}
+        >
+          For this to work you need an exposed Ethereum wallet in browser (e.g.
+          using Metamask or Mist).
+        </div>
         {this.state.loaded ? (
           <div>
             {this.state.notConfirmedNews.length === 0 ? (

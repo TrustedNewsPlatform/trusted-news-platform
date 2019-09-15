@@ -5,12 +5,12 @@ import { ethereumEndpoint, contractAddress } from "../config.js";
 
 let provider;
 
-let ethereumEnabled = false;
+let signerAvailable = false;
 if (window.ethereum) {
-  ethereumEnabled = window.ethereum.enable();
+  signerAvailable = window.ethereum.enable();
 }
 
-if (!ethereumEnabled) {
+if (!signerAvailable) {
   provider = new ethers.providers.JsonRpcProvider(ethereumEndpoint);
 } else {
   provider = new ethers.providers.Web3Provider(window.ethereum).getSigner();
@@ -18,4 +18,4 @@ if (!ethereumEnabled) {
 
 const contract = new ethers.Contract(contractAddress, abi, provider);
 
-export { contract, provider };
+export { contract, provider, signerAvailable };

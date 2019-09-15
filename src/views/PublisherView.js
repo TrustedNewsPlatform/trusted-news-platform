@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 
 import ipfsClient from "ipfs-http-client";
 
-import { contract, provider } from "../utils/ethereum";
+import { contract, provider, signerAvailable } from "../utils/ethereum";
 import { ipfsHashToBytes32, bytes32ToIpfsHash } from "../utils/ipfsUtils";
 import { Row, Col } from "react-bootstrap";
 import ReactMarkdown from "react-markdown";
@@ -22,7 +22,9 @@ export default class PublisherView extends Component {
   render() {
     return (
       <div>
-        <div>
+        <div
+          style={{ color: "red", display: signerAvailable ? "none" : "block" }}
+        >
           For this to work you need an exposed Ethereum wallet in browser (e.g.
           using Metamask or Mist).
         </div>
@@ -42,6 +44,7 @@ export default class PublisherView extends Component {
           <Col>
             <Form>
               <FormControl
+                disabled={!signerAvailable}
                 as="textarea"
                 className="mr-sm-2 mt-2"
                 value={this.state.textarea}
@@ -49,7 +52,11 @@ export default class PublisherView extends Component {
                 placeholder="Enter news text here..."
                 style={{ minHeight: 400 }}
               />
-              <Button className="mt-2" onClick={() => this.publish()}>
+              <Button
+                disabled={!signerAvailable}
+                className="mt-2"
+                onClick={() => this.publish()}
+              >
                 Publish
               </Button>
             </Form>
@@ -65,6 +72,10 @@ export default class PublisherView extends Component {
     );
   }
   async publish() {
+    if (!signerAvailable)
+      return alert(
+        "There's no signer available, please install Metamask extension or use Ethereum-enabled browser."
+      );
     const ipfs = ipfsClient(ipfsApiHost, ipfsApiPort, { protocol: "https" });
     const [res] = await ipfs.add(this.state.textarea);
     console.log("IPFS hash: " + res.hash);
